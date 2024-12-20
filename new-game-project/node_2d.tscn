@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=4 uid="uid://cdgykxtg3owil"]
+[gd_scene load_steps=21 format=4 uid="uid://cdgykxtg3owil"]
 
 [ext_resource type="Script" path="res://node_2d.gd" id="1_d6xsy"]
 [ext_resource type="Script" path="res://player.gd" id="1_eq8bs"]
 [ext_resource type="Texture2D" uid="uid://csvv5tuxugd0q" path="res://charactersheet.png" id="1_n072q"]
 [ext_resource type="Texture2D" uid="uid://cy3msqtbumphn" path="res://dungeonssheet.png" id="1_xtbyh"]
+[ext_resource type="PackedScene" uid="uid://by6kpit0ls1wl" path="res://enemy_1.tscn" id="5_gauvt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6emwc"]
 texture = ExtResource("1_xtbyh")
@@ -32,12 +33,11 @@ texture_region_size = Vector2i(24, 24)
 
 [sub_resource type="TileSet" id="TileSet_ppiu2"]
 tile_size = Vector2i(24, 24)
-physics_layer_0/collision_layer = 16
-physics_layer_0/collision_mask = 16
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 4
 sources/0 = SubResource("TileSetAtlasSource_6emwc")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_78531"]
-size = Vector2(18.5, 18.6875)
+[sub_resource type="CircleShape2D" id="CircleShape2D_cb5vy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_adiei"]
 size = Vector2(20, 29)
@@ -290,14 +290,15 @@ tile_map_data = PackedByteArray("AAD+//7/AAAEAAAAAAD+////AAAEAAAAAAD/////AAAEAAA
 tile_set = SubResource("TileSet_ppiu2")
 
 [node name="player" type="CharacterBody2D" parent="."]
-collision_layer = 16
-collision_mask = 16
+z_index = 5
+collision_layer = 6
+collision_mask = 6
 collision_priority = 0.35
 script = ExtResource("1_eq8bs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
-position = Vector2(0, 3.34375)
-shape = SubResource("RectangleShape2D_78531")
+position = Vector2(-1, 4)
+shape = SubResource("CircleShape2D_cb5vy")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 
@@ -320,5 +321,9 @@ libraries = {
 }
 
 [node name="attack_cooldown" type="Timer" parent="player"]
+
+[node name="enemy1" parent="." instance=ExtResource("5_gauvt")]
+position = Vector2(-197, -8)
+scale = Vector2(0.8, 0.8)
 
 [connection signal="timeout" from="player/attack_cooldown" to="player" method="_on_attack_cooldown_timeout"]

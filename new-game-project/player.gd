@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-@export var speed = 70 # Adjust this value to your desired speed
+@export var health = 100
+@export var speed = 70
 @onready var anim = $AnimationPlayer
 
 var isAttacking = false
