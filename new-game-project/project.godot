@@ -10,10 +10,18 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
-run/main_scene="res://node_2d.tscn"
+config/name="Wave Game"
+run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*res://global.gd"
+
+[debug]
+
+gdscript/layer_4=""
 
 [display]
 
@@ -60,6 +68,7 @@ attack={
 2d_physics/layer_1="player"
 2d_physics/layer_2="enemy"
 2d_physics/layer_3="tileset"
+2d_physics/layer_4="coin"
 
 [rendering]
 

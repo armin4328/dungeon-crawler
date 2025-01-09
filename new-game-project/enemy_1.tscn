@@ -1,13 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://by6kpit0ls1wl"]
+[gd_scene load_steps=14 format=3 uid="uid://by6kpit0ls1wl"]
 
 [ext_resource type="Texture2D" uid="uid://2hyw5iqj2t37" path="res://Slime1_Walk_body.png" id="1_5yvxx"]
 [ext_resource type="Script" path="res://enemy_1.gd" id="1_ercan"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tjshu"]
-radius = 9.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7r3l5"]
-size = Vector2(14, 15)
+size = Vector2(9.75001, 32.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tjshu"]
+radius = 7.07107
 
 [sub_resource type="Animation" id="Animation_dl5le"]
 length = 0.001
@@ -122,28 +122,33 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0jnuu"]
-radius = 70.2282
+radius = 202.01
 
-[node name="enemy1" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_0cim4"]
+radius = 7.0
+
+[node name="enemy1" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_ercan")
 
-[node name="hitbox" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_tjshu")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("1_5yvxx")
 hframes = 8
 vframes = 4
 
-[node name="Area2D" type="Area2D" parent="Sprite2D"]
+[node name="Area2D" type="Area2D" parent="Sprite2D" groups=["enemy_hurtbox"]]
+collision_mask = 2
 
-[node name="hurtbox" type="CollisionShape2D" parent="Sprite2D/Area2D"]
-position = Vector2(16, 1)
+[node name="hurtbox" type="CollisionShape2D" parent="Sprite2D/Area2D" groups=["enemy_hurtbox"]]
+position = Vector2(13.875, -1.02818e-06)
+scale = Vector2(0.999999, 0.999999)
 shape = SubResource("RectangleShape2D_7r3l5")
-disabled = true
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tjshu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -155,7 +160,14 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, 1)
 shape = SubResource("CircleShape2D_0jnuu")
+
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("CircleShape2D_0cim4")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="area_entered" from="Area2D2" to="." method="_on_area_2d_2_area_entered"]
